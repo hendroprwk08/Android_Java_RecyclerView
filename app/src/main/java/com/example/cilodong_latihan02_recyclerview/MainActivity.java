@@ -1,15 +1,28 @@
 package com.example.cilodong_latihan02_recyclerview;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
+
+    AlertDialog.Builder alertDialog;
+    LayoutInflater inflater;
+
+    EditText edtNama;
+    RadioGroup rGroup;
+    RadioButton rbIk, rbSI, rdTI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +35,40 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                alertDialog = new AlertDialog.Builder(MainActivity.this);
+
+                inflater = getLayoutInflater();
+                view = inflater.inflate(R.layout.input_layout, null);
+
+                final View diagView = view;
+
+                alertDialog.setView(diagView);
+                alertDialog.setCancelable(true);
+                alertDialog.setIcon(R.mipmap.ic_launcher);
+                alertDialog.setTitle("Biodata");
+
+                //definisi objek
+                edtNama = (EditText) findViewById(R.id.edNama);
+                rGroup = (RadioGroup) findViewById(R.id.rbGroup);
+
+                alertDialog.setPositiveButton("SIMPAN", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                alertDialog.setNegativeButton("BATAL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
+
+               // Snackbar.make(diagView, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                                .setAction("Action", null).show();
+
             }
         });
     }
