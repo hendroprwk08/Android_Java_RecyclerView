@@ -1,9 +1,15 @@
 package com.example.cilodong_latihan02_recyclerview;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -64,14 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.setPositiveButton("SIMPAN", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String n;
-                        Boolean ik, ti, si;
-
-                        n = edtNama.getText().toString();
-                        ik =  rbIk.isChecked();
-                        ti =  rbTI.isChecked();
-                        si =  rbSI.isChecked();
-
                         //Simpan kedalam pojo
                         siswaArrayList.add(
                                 new Siswa(
@@ -82,9 +80,27 @@ public class MainActivity extends AppCompatActivity {
                                 )
                         );
 
-                        Toast.makeText(getBaseContext(),
-                                "Data tersimpan",
-                                Toast.LENGTH_SHORT).show();
+                        NotificationManager notificationManager = (NotificationManager) getBaseContext().getSystemService(getBaseContext().NOTIFICATION_SERVICE);
+
+                        int notificationId = 1;
+                        String channelId = "channel-01";
+                        String channelName = "Channel Name";
+                        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            NotificationChannel mChannel = new NotificationChannel(
+                                    channelId, channelName, importance);
+                            notificationManager.createNotificationChannel(mChannel);
+                        }
+
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getBaseContext(), channelId)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("title")
+                                .setContentText("body");
+
+                        notificationManager.notify(notificationId, mBuilder.build());
+
+                        //Toast.makeText(getBaseContext(),"Data tersimpan", Toast.LENGTH_SHORT).show();
                     }
                 });
 
