@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText edtNama;
     RadioGroup rGroup;
-    RadioButton rbIk, rbSI, rdTI;
+    RadioButton rbIk, rbSI, rbTI;
+
+    ArrayList<Siswa> siswaArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        siswaArrayList = new ArrayList<>();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,10 +57,26 @@ public class MainActivity extends AppCompatActivity {
                 //definisi objek
                 edtNama = (EditText) findViewById(R.id.edNama);
                 rGroup = (RadioGroup) findViewById(R.id.rbGroup);
+                rbIk = (RadioButton) findViewById(R.id.rb_ik);
+                rbSI = (RadioButton) findViewById(R.id.rb_si);
+                rbTI = (RadioButton) findViewById(R.id.rb_ti);
 
                 alertDialog.setPositiveButton("SIMPAN", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //Simpan kedalam pojo
+                        siswaArrayList.add(
+                                new Siswa(
+                                        edtNama.getText().toString(),
+                                        rbIk.isChecked(),
+                                        rbTI.isChecked(),
+                                        rbSI.isChecked()
+                                )
+                        );
+
+                        Toast.makeText(getBaseContext(),
+                                "Data tersimpan",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 
