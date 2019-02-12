@@ -55,15 +55,23 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.setTitle("Biodata");
 
                 //definisi objek
-                edtNama = (EditText) findViewById(R.id.edNama);
-                rGroup = (RadioGroup) findViewById(R.id.rbGroup);
-                rbIk = (RadioButton) findViewById(R.id.rb_ik);
-                rbSI = (RadioButton) findViewById(R.id.rb_si);
-                rbTI = (RadioButton) findViewById(R.id.rb_ti);
+                edtNama = (EditText) view.findViewById(R.id.edNama);
+                rGroup = (RadioGroup) view.findViewById(R.id.rbGroup);
+                rbIk = (RadioButton) view.findViewById(R.id.rb_ik);
+                rbSI = (RadioButton) view.findViewById(R.id.rb_si);
+                rbTI = (RadioButton) view.findViewById(R.id.rb_ti);
 
                 alertDialog.setPositiveButton("SIMPAN", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        String n;
+                        Boolean ik, ti, si;
+
+                        n = edtNama.getText().toString();
+                        ik =  rbIk.isChecked();
+                        ti =  rbTI.isChecked();
+                        si =  rbSI.isChecked();
+
                         //Simpan kedalam pojo
                         siswaArrayList.add(
                                 new Siswa(
