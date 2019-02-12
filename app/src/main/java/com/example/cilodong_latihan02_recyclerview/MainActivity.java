@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
                         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getBaseContext(), channelId)
                                 .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle("title")
-                                .setContentText("body");
+                                .setContentTitle("Data berhasil ditambahkan")
+                                .setContentText(edtNama.getText().toString() +" ditambah");
 
                         notificationManager.notify(notificationId, mBuilder.build());
 
