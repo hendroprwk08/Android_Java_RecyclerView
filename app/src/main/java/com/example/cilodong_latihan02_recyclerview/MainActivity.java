@@ -1,11 +1,8 @@
 package com.example.cilodong_latihan02_recyclerview;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        tvNama = (TextView) findViewById(R.id.tv_nama);
-        tvKelas = (TextView) findViewById(R.id.tv_kelas);
 
         siswaArrayList = new ArrayList<>();
 
@@ -80,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
                                 )
                         );
 
+
+
+                        /*
                         NotificationManager notificationManager = (NotificationManager) getBaseContext().getSystemService(getBaseContext().NOTIFICATION_SERVICE);
 
                         int notificationId = 1;
@@ -111,13 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
                         //untuk kelas, kita hanya ambil yang dipilih saja
                         int selectedIndex = rGroup.getCheckedRadioButtonId();
-                        final RadioButton radioButton = (RadioButton) diagView
-                                .findViewById(selectedIndex);
+                        final RadioButton radioButton = (RadioButton) diagView.findViewById(selectedIndex);
                         tvKelas.setText(radioButton.getText().toString());
                         //--------------------
 
                         //sementara aja
-                        /*
+
                         for (int i = 0; i < siswaArrayList.size() ; i++) {
                             Log.d("Tes nama ", siswaArrayList.get(i).getNama());
                             Log.d("Tes IK", siswaArrayList.get(i).getIK().toString());
