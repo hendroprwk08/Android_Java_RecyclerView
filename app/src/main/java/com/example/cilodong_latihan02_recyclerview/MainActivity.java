@@ -1,5 +1,6 @@
 package com.example.cilodong_latihan02_recyclerview;
 
+import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,36 +8,35 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     AlertDialog.Builder alertDialog;
     LayoutInflater inflater;
 
-    EditText edtNama;
-    RadioGroup rGroup;
-    RadioButton rbIk, rbSI, rbTI;
-    TextView tvNama, tvKelas;
+    EditText edtNama, edtKelas;
 
-    ArrayList<Siswa> siswaArrayList  = new ArrayList<>();
+    List<Siswa> siswas;
+
+    MyDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        siswaArrayList = new ArrayList<>();
+        //panggil database
+        db = Room.databaseBuilder(
+                getApplicationContext(),
+                MyDatabase.class,
+                "db-siswa")
+                .allowMainThreadQueries()
+                .build();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,25 +56,22 @@ public class MainActivity extends AppCompatActivity {
 
                 //definisi objek
                 edtNama = (EditText) view.findViewById(R.id.edNama);
-                rGroup = (RadioGroup) view.findViewById(R.id.rbGroup);
-                rbIk = (RadioButton) view.findViewById(R.id.rb_ik);
-                rbSI = (RadioButton) view.findViewById(R.id.rb_si);
-                rbTI = (RadioButton) view.findViewById(R.id.rb_ti);
+                edtKelas = (EditText) view.findViewById(R.id.edKelas); //<-----
 
                 alertDialog.setPositiveButton("SIMPAN", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Simpan kedalam pojo
-                        siswaArrayList.add(
-                                new Siswa(
-                                        edtNama.getText().toString(),
-                                        rbIk.isChecked(),
-                                        rbTI.isChecked(),
-                                        rbSI.isChecked()
-                                )
+
+                        //insert data
+                        db.siswaDao().insertAll(
+                            new Siswa(
+                                edtNama.getText().toString(),
+                                edtKelas.getText().toString()
+                            )
                         );
 
                         showRecyclerView();
+
                         /*
                         NotificationManager notificationManager = (NotificationManager) getBaseContext().getSystemService(getBaseContext().NOTIFICATION_SERVICE);
 
@@ -150,8 +147,10 @@ public class MainActivity extends AppCompatActivity {
                 new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(llm);
 
+        siswas = db.siswaDao().getAll(); //ambil data
+
         RvAdapter rvAdapter = new RvAdapter(this);
-        rvAdapter.setSiswaArrayList(siswaArrayList);
+        rvAdapter.setSiswa(siswas);
         rv.setAdapter(rvAdapter);
     }
 }

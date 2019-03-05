@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
-    private ArrayList<Siswa> siswaArrayList;
+    private List<Siswa> siswas;
     private Context context;
 
     //menginformasikan context pada adapter
@@ -21,13 +21,13 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
     }
 
     //ambil data siswa
-    public ArrayList<Siswa> getSiswaArrayList() {
-        return siswaArrayList;
+    public List<Siswa> getSiswas() {
+        return siswas;
     }
 
-    //set data siswa kedalam array list yang ada pada adapter
-    public void setSiswaArrayList(ArrayList siswaArrayList){
-        this.siswaArrayList = siswaArrayList;
+    //set data siswa kedalam list yang ada pada adapter
+    public void setSiswa(List siswas){
+        this.siswas = siswas;
     }
 
     @NonNull
@@ -47,26 +47,11 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
     public void onBindViewHolder(@NonNull RvAdapter.CardViewHolder cardViewHolder, int i) {
         //4. meletakkan array list pada recycler view
         final String nama, kelas;
-        String tempKelas = null;
 
-        nama = getSiswaArrayList().get(i).getNama();
+        nama = getSiswas().get(i).getNama();
+        kelas = getSiswas().get(i).getKelas();
 
         cardViewHolder.tvNama.setText(nama);
-
-        //atur radio button
-        Boolean ik = getSiswaArrayList().get(i).getIK();
-        Boolean ti = getSiswaArrayList().get(i).getTI();
-        Boolean si = getSiswaArrayList().get(i).getSI();
-
-        if (ik){
-            tempKelas = "Informatika Komputer";
-        }else if (ti){
-            tempKelas = "Teknik Informatika";
-        }else if (si){
-            tempKelas = "Sistem Infomasi";
-        }
-
-        kelas = tempKelas;
         cardViewHolder.tvKelas.setText(kelas);
 
         cardViewHolder.itemView.setOnClickListener(
@@ -83,7 +68,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
     @Override
     public int getItemCount() {
         //3. menghitung jumlah data pada array list
-        return getSiswaArrayList().size();
+        return getSiswas().size();
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {

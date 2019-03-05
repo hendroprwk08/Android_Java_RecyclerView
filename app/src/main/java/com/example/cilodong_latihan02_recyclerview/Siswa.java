@@ -1,16 +1,41 @@
 package com.example.cilodong_latihan02_recyclerview;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity
 public class Siswa {
-    String nama;
-    Boolean IK, TI, SI;
 
-    public Siswa() { }
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
-    public Siswa(String nama, Boolean IK, Boolean TI, Boolean SI) {
+    @ColumnInfo(name = "nama")
+    private String nama;
+
+    @ColumnInfo(name = "kelas")
+    private String kelas;
+
+    @Ignore  //untuk proses insert
+    public Siswa(String nama, String kelas) {
         this.nama = nama;
-        this.IK = IK;
-        this.TI = TI;
-        this.SI = SI;
+        this.kelas = kelas;
+    }
+
+    //untuk proses update dan delete
+    public Siswa(int id, String nama, String kelas) {
+        this.id = id;
+        this.nama = nama;
+        this.kelas = kelas;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNama() {
@@ -21,27 +46,11 @@ public class Siswa {
         this.nama = nama;
     }
 
-    public Boolean getIK() {
-        return IK;
+    public String getKelas() {
+        return kelas;
     }
 
-    public void setIK(Boolean IK) {
-        this.IK = IK;
-    }
-
-    public Boolean getTI() {
-        return TI;
-    }
-
-    public void setTI(Boolean TI) {
-        this.TI = TI;
-    }
-
-    public Boolean getSI() {
-        return SI;
-    }
-
-    public void setSI(Boolean SI) {
-        this.SI = SI;
+    public void setKelas(String kelas) {
+        this.kelas = kelas;
     }
 }
