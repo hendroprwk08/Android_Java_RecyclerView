@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     List<Siswa> siswas;
 
-    MyDatabase db;
+    //static agar dapat dipanggil pada activity lain
+    static MyDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,5 +153,12 @@ public class MainActivity extends AppCompatActivity {
         RvAdapter rvAdapter = new RvAdapter(this);
         rvAdapter.setSiswa(siswas);
         rv.setAdapter(rvAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        showRecyclerView();
     }
 }

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -36,6 +37,19 @@ public class DetailActivity extends AppCompatActivity {
         bt_ubah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.db.siswaDao().update(
+                        new Siswa(
+                                id,
+                                d_ed_nama.getText().toString(),
+                                d_ed_kelas.getText().toString()
+                        )
+                );
+
+                Toast.makeText(getApplicationContext(),
+                                "Data tersimpan",
+                                Toast.LENGTH_SHORT).show();
+
+                finish(); //tutup activity
 
             }
         });
@@ -43,7 +57,19 @@ public class DetailActivity extends AppCompatActivity {
         bt_hapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.db.siswaDao().delete(
+                        new Siswa(
+                                id,
+                                d_ed_nama.getText().toString(),
+                                d_ed_kelas.getText().toString()
+                        )
+                );
 
+                Toast.makeText(getApplicationContext(),
+                        "Data dihapus",
+                        Toast.LENGTH_SHORT).show();
+
+                finish();
             }
         });
     }

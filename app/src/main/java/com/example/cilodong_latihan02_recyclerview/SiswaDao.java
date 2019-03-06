@@ -1,8 +1,10 @@
 package com.example.cilodong_latihan02_recyclerview;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ public interface SiswaDao {
     @Insert
     void insertAll(Siswa siswa); //pake class tanpa id-nya
 
-    @Insert
+    @Update
     void update(Siswa siswa); //pake class yang ada id-nya
 
-    @Insert
+    @Delete
     void delete(Siswa siswa); //pake class yang ada id-nya
 }
