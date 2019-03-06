@@ -1,13 +1,14 @@
 package com.example.cilodong_latihan02_recyclerview;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
     }
 
     //ambil data siswa
-    public List<Siswa> getSiswas() {
+    public List<Siswa> getSiswa() {
         return siswas;
     }
 
@@ -47,9 +48,11 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
     public void onBindViewHolder(@NonNull RvAdapter.CardViewHolder cardViewHolder, int i) {
         //4. meletakkan array list pada recycler view
         final String nama, kelas;
+        final int id;
 
-        nama = getSiswas().get(i).getNama();
-        kelas = getSiswas().get(i).getKelas();
+        id = getSiswa().get(i).getId();
+        nama = getSiswa().get(i).getNama();
+        kelas = getSiswa().get(i).getKelas();
 
         cardViewHolder.tvNama.setText(nama);
         cardViewHolder.tvKelas.setText(kelas);
@@ -58,9 +61,15 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
                 new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,
-                        nama + " - " + kelas + " di klik",
-                        Toast.LENGTH_SHORT).show();
+               Bundle b = new Bundle();
+               b.putInt("b_id", id);
+               b.putString("b_nama", nama);
+               b.putString("b_kelas", kelas);
+
+               Intent intent = new Intent(context, DetailActivity.class);
+               intent.putExtras(b);
+
+               context.startActivity(intent);
             }
         });
     }
@@ -68,7 +77,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
     @Override
     public int getItemCount() {
         //3. menghitung jumlah data pada array list
-        return getSiswas().size();
+        return getSiswa().size();
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
